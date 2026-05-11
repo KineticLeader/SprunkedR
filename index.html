@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SprunkedR App</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
+        }
 
+        h1 { color: #ff9900; text-shadow: 2px 2px #000; }
+
+        /* THE SPRITE WINDOW */
+        #oren-player {
+            width: 128px;  /* 32px scaled 4x */
+            height: 128px; /* 32px scaled 4x */
+            
+            /* Use YOUR path */
+            background-image: url('assets/Images/Oren.png'); 
+            background-repeat: no-repeat;
+            
+            /* 160px wide * 4 = 640px */
+            background-size: 640px 128px; 
+            
+            /* Keep it 8-bit crisp! */
+            image-rendering: pixelated;
+            
+            border: 2px solid #333;
+            cursor: pointer;
+        }
+
+        .controls { margin-top: 20px; }
+        button { padding: 10px 20px; cursor: pointer; background: #ff9900; border: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h1>SprunkedR Phase 1</h1>
+    
+    <div id="oren-player"></div>
+
+    <div class="controls">
+        <button onclick="nextFrame()">NEXT FRAME</button>
+        <p>Click the button to see Oren's 5 frames!</p>
+    </div>
+
+    <script>
+        let currentFrame = 0;
+        const totalFrames = 5;
+        const frameWidth = 128; // This is the scaled width (32 * 4)
+
+        function nextFrame() {
+            currentFrame++;
+            if (currentFrame >= totalFrames) {
+                currentFrame = 0;
+            }
+            
+            // Move the background to show the next Oren
+            const player = document.getElementById('oren-player');
+            player.style.backgroundPosition = `-${currentFrame * frameWidth}px 0px`;
+            
+            console.log("Current Frame: " + currentFrame);
+        }
+    </script>
+</body>
+</html>
