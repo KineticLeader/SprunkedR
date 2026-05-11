@@ -2,73 +2,77 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SprunkedR App</title>
     <style>
         body {
-            background-color: #121212;
-            color: white;
+            background-color: #1a1a1a;
+            color: #ff9900;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
-            font-family: sans-serif;
+            font-family: 'Courier New', Courier, monospace;
         }
 
-        h1 { color: #ff9900; text-shadow: 2px 2px #000; }
+        h1 { margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
 
         /* THE SPRITE WINDOW */
         #oren-player {
             width: 128px;  /* 32px scaled 4x */
             height: 128px; /* 32px scaled 4x */
             
-            /* Use YOUR path */
+            /* Path to your 160x32 png */
             background-image: url('assets/Images/Oren.png'); 
             background-repeat: no-repeat;
             
             /* 160px wide * 4 = 640px */
             background-size: 640px 128px; 
             
-            /* Keep it 8-bit crisp! */
+            /* Keeps the 8-bit pixels crisp */
             image-rendering: pixelated;
             
-            border: 2px solid #333;
-            cursor: pointer;
+            border: 4px solid #333;
+            background-color: #000;
+            margin-bottom: 20px;
         }
 
-        .controls { margin-top: 20px; }
-        button { padding: 10px 20px; cursor: pointer; background: #ff9900; border: none; font-weight: bold; }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #ff9900;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 4px #cc7a00;
+        }
+
+        button:active {
+            box-shadow: 0 2px #cc7a00;
+            transform: translateY(2px);
+        }
+
+        /* Gray out when playing to prevent bugs */
+        button:disabled {
+            background-color: #555;
+            box-shadow: 0 4px #222;
+            cursor: not-allowed;
+            color: #888;
+        }
     </style>
 </head>
 <body>
 
-    <h1>SprunkedR Phase 1</h1>
+    <h1>SprunkedR: Oren</h1>
     
     <div id="oren-player"></div>
 
-    <div class="controls">
-        <button onclick="nextFrame()">NEXT FRAME</button>
-        <p>Click the button to see Oren's 5 frames!</p>
-    </div>
+    <button id="play-btn" onclick="startCycle()">PLAY ANIMATION</button>
 
-    <script>
-        let currentFrame = 0;
-        const totalFrames = 5;
-        const frameWidth = 128; // This is the scaled width (32 * 4)
-
-        function nextFrame() {
-            currentFrame++;
-            if (currentFrame >= totalFrames) {
-                currentFrame = 0;
-            }
-            
-            // Move the background to show the next Oren
-            const player = document.getElementById('oren-player');
-            player.style.backgroundPosition = `-${currentFrame * frameWidth}px 0px`;
-            
-            console.log("Current Frame: " + currentFrame);
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
