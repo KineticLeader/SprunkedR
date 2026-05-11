@@ -1,41 +1,54 @@
-// Settings for your 160x32 spritesheet
-const frameWidth = 128; // Each frame is 32px * 4 scale
-const totalFrames = 4;  // Your requested 4-frame cycle
-const fps = 15;
-const frameDuration = 1000 / fps; // Roughly 66.6ms
-
 let isPlaying = false;
 
 function startCycle() {
-    // 1. Prevent overlapping animations
     if (isPlaying) return;
 
     const btn = document.getElementById('play-btn');
     const player = document.getElementById('oren-player');
-
-    // 2. Lock the button and state
+    
+    // EXACT match for your filename
+    const audio = new Audio('Oren.mp3.wav');
+    
     isPlaying = true;
     btn.disabled = true;
-    btn.innerText = "PLAYING...";
+    btn.innerText = "VIBING...";
 
-    let currentFrame = 0;
+    // Matches the "dots" rhythm from your Song Maker screenshot
+    // Each 'pos' is a frame jump (0, 128, 256, 384)
+    const rhythmPattern = [
+        { pos: 0,   delay: 300 }, 
+        { pos: 128, delay: 300 }, 
+        { pos: 256, delay: 150 }, 
+        { pos: 384, delay: 300 }, 
+        { pos: 256, delay: 150 },
+        { pos: 128, delay: 300 },
+        { pos: 0,   delay: 300 }
+    ];
 
-    // 3. Start the animation timer
-    const animationInterval = setInterval(() => {
-        currentFrame++;
+    // Start the music
+    audio.play().catch(e => {
+        console.log("Audio play failed. Make sure Oren.mp3.wav is in the main folder!");
+        console.error(e);
+    });
 
-        if (currentFrame < totalFrames) {
-            // Move the sheet to the left to show next frame
-            player.style.backgroundPosition = `-${currentFrame * frameWidth}px 0px`;
-        } else {
-            // 4. Reset after 4 frames
-            clearInterval(animationInterval);
-            player.style.backgroundPosition = `0px 0px`; // Snap back to first frame
+    let step = 0;
+
+    function playNextStep() {
+        if (step < rhythmPattern.length) {
+            player.style.backgroundPosition = `-${rhythmPattern[step].pos}px 0px`;
             
-            // Unlock everything
+            setTimeout(() => {
+                step++;
+                playNextStep();
+            }, rhythmPattern[step].delay);
+        } else {
+            // Reset Oren to frame 1
+            player.style.backgroundPosition = "0px 0px";
             isPlaying = false;
             btn.disabled = false;
             btn.innerText = "PLAY ANIMATION";
         }
-    }, frameDuration);
+    }
+
+    playNextStep();
 }
