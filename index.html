@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SprunkedR - Phase 1</title>
+    <title>SprunkedR - 7 Polos</title>
     <style>
         body {
             background: #0a0a0a;
             color: #ffaa00;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -18,17 +18,24 @@
             user-select: none;
         }
 
-        h1 { margin-top: 20px; letter-spacing: 5px; text-shadow: 0 0 10px orange; }
-
         #stage {
-            width: 300px;
-            height: 300px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            margin-top: 40px;
+            align-items: flex-end;
+            gap: 10px;
+            width: 90%;
+            height: 300px;
+            margin-top: 50px;
+            border-bottom: 3px solid #222;
+        }
+
+        .character-slot {
+            width: 128px;
+            height: 128px;
             position: relative;
-            border-bottom: 2px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .character {
@@ -36,30 +43,26 @@
             height: 128px;
             image-rendering: pixelated;
             background-repeat: no-repeat;
+            background-size: contain;
             position: absolute;
         }
 
-        #polo-player {
-            background-image: url('assets/Images/Polo.png');
-            background-size: contain;
-            background-position: center;
-        }
+        /* All Polos use the same Polo.png */
+        .polo { background-image: url('assets/Images/Polo.png'); }
 
+        /* Oren's spritesheet (matched to Polo size) */
         #oren-player {
             background-image: url('assets/Images/Oren.png');
-            background-size: 640px 128px; /* 5 frames x 128px */
+            background-size: 640px 128px;
             display: none;
         }
 
-        /* The Draggable Icon Tray */
         #tray {
-            position: absolute;
-            bottom: 20px;
+            margin-top: 50px;
             width: 100%;
-            height: 120px;
+            height: 100px;
             display: flex;
             justify-content: center;
-            align-items: center;
         }
 
         #oren-icon {
@@ -70,13 +73,9 @@
             background-repeat: no-repeat;
             position: absolute;
             cursor: grab;
-            z-index: 100;
             image-rendering: pixelated;
+            z-index: 1000;
         }
-
-        #oren-icon:active { cursor: grabbing; }
-
-        .hint { font-size: 12px; color: #444; margin-top: 150px; }
     </style>
 </head>
 <body>
@@ -84,15 +83,20 @@
     <h1>SPRUNKED_R</h1>
 
     <div id="stage">
-        <div id="polo-player" class="character"></div>
+        <div class="character-slot" id="slot-1"><div class="character polo"></div></div>
+        <div class="character-slot" id="slot-2"><div class="character polo"></div></div>
+        <div class="character-slot" id="slot-3"><div class="character polo"></div></div>
+        <div class="character-slot" id="slot-4"><div class="character polo"></div></div>
+        <div class="character-slot" id="slot-5"><div class="character polo"></div></div>
+        <div class="character-slot" id="slot-6"><div class="character polo"></div></div>
+        <div class="character-slot" id="slot-7"><div class="character polo"></div></div>
+        
         <div id="oren-player" class="character"></div>
     </div>
 
     <div id="tray">
         <div id="oren-icon"></div>
     </div>
-
-    <p class="hint">DRAG ORI ONTO THE POLO</p>
 
     <script src="App.js"></script>
 </body>
